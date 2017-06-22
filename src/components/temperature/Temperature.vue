@@ -5,7 +5,8 @@
 </template>
 
 <script type="text/javascript">
-  import echarts from 'echarts';
+  import echarts from 'echarts/lib/echarts';
+  import 'echarts/lib/component/tooltip';
   import 'echarts-liquidfill';
   import { temperatureOption } from '@/utils/echartConfig.js';
   import ApiAdress from '@/utils/apiAdress.js';

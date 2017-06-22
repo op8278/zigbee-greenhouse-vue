@@ -2,19 +2,19 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import router from './router';
+// import router from './router';
 import axios from 'axios';
-import lodash from 'lodash';
+// import lodash from 'lodash';
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$http=axios;
-Vue.prototype.$lodash=lodash;
+// Vue.prototype.$lodash=lodash;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
+  //router,
   template: '<App/>',
   components: { App }
 })

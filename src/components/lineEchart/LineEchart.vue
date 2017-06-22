@@ -5,7 +5,12 @@
 </template>
 
 <script type="text/javascript">
-  import echarts from 'echarts';
+  import echarts from 'echarts/lib/echarts';
+  import 'echarts/lib/chart/line';
+  import 'echarts/lib/component/dataZoom';
+  import 'echarts/lib/component/tooltip';
+  import 'echarts/lib/component/toolbox';
+  import 'echarts/lib/component/legend';
   import { lineEchartOption } from '@/utils/echartConfig.js';
   import ApiAdress from '@/utils/apiAdress.js';
   export default {
@@ -48,14 +53,14 @@
         this.echart.hideLoading();
         this.echart.setOption(option);
       },
-      assembleOption(temperatureData,humidityData){
-        if (!temperatureData || !humidityData) {
-          console.log('请确保参数完整性');
-          return ;
-        }
-        let config = this.$lodash.defaultsDeep({},lineEchartOption,{series:[{data:temperatureData},{data:humidityData}]});
-        return config;
-      },
+      // assembleOption(temperatureData,humidityData){
+      //   if (!temperatureData || !humidityData) {
+      //     console.log('请确保参数完整性');
+      //     return ;
+      //   }
+      //   let config = this.$lodash.defaultsDeep({},lineEchartOption,{series:[{data:temperatureData},{data:humidityData}]});
+      //   return config;
+      // },
       showLoading(){
         if (!this.echart) {
           console.log('请初始化Echarts');

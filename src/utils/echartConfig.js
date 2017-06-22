@@ -163,8 +163,6 @@ exports.humidityOption = {
     series: [{
         name:'湿度',
         type: 'liquidFill',
-
-
         data: [0.6, 0.5, 0.4, 0.3],
 
         radius:'90%',
@@ -174,7 +172,7 @@ exports.humidityOption = {
                 // formatter: '湿度\n{c}%',
                 formatter: function(param) {
                     return '湿度' + '\n'
-                         + param.value*100 +'%';
+                         + (param.value*100).toFixed(2) +'%';
                 },
                 textStyle:{
                     fontSize:28
@@ -185,6 +183,12 @@ exports.humidityOption = {
 };
 
 exports.temperatureOption={
+    tooltip: {
+        show: true,
+        formatter: function(item) {
+            return ' ' + item.data.rawValue + '°C';
+        },
+    },
     series:[{
         animation: true,
         waveAnimation: true,

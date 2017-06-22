@@ -5,8 +5,9 @@
 </template>
 
 <script type="text/javascript">
-  import echarts from 'echarts';
- import 'echarts-liquidfill';
+  import echarts from 'echarts/lib/echarts';
+  import 'echarts/lib/component/tooltip';
+  import 'echarts-liquidfill';
   import { humidityOption } from '@/utils/echartConfig.js';
   export default {
     props:{

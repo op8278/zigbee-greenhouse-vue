@@ -1,12 +1,13 @@
 <template>
   <div class="app-container">
-
-    <!-- <v-header :title='msg' :icon="icon" :navData="navData"></v-header> -->
     <div class="current-info">
       <div class="echart-item">
         <humidity ref="humidity"></humidity>
       </div>
-      <!-- <span class="time">{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
+      <div class="time">
+        <span >{{ nowTime }}</span>
+        <span class="cursor">|</span>
+      </div>
       <div class="echart-item">
         <temperature ref="temperature"></temperature>
       </div>
@@ -17,8 +18,6 @@
 </template>
 
 <script>
-import Header from '@/components/header/Header.vue';
-import ZigbeeImg from '../static/img/zigbee.png';
 import moment from 'moment';
 import LineEchart from '@/components/lineEchart/LineEchart.vue';
 import Humidity from '@/components/humidity/Humidity.vue';
@@ -27,25 +26,15 @@ import ApiAdress from '@/utils/apiAdress.js';
 export default {
   data(){
     return{
-      msg:'Zigbee课程设计',
-      icon:ZigbeeImg,
-      navData:[{
-        text:'首页',
-        href:'#'
-      },{
-        text:'后台',
-        href:'#2'
-      }],
-        lastEchartDataId:Number,
-        assembleLastEcharData:Object,
-        assembleEcharDataT:Object,
-        assembleEcharDataH:Object,
+      lastEchartDataId:Number,
+      assembleLastEcharData:Object,
+      assembleEcharDataT:Object,
+      assembleEcharDataH:Object,
+      nowTime:moment().format('YYYY-MM-DD HH:mm:ss')
     }
   },
   methods:{
     onRefreshEchartsData(refreshData){
-      // console.log('onRefreshEchartsData');
-      // console.log(refreshData);
       let temperature = refreshData.temperature;
       let humidity = refreshData.humidity;
       let createTime = refreshData.createTime;
@@ -53,7 +42,6 @@ export default {
       //data: [0.6, 0.5, 0.4, 0.3],
       let humidityData = [humidity/100,humidity/150,humidity/200,humidity/250];
       //(x-(-5)*0.02)
-      //-5 ~ 40
       let temperatureData = [{value:((parseInt(temperature)+5)*0.02),rawValue:temperature}]
 
       this.$refs.humidity.refreshData(humidityData);
@@ -133,19 +121,23 @@ export default {
         this.assembleEcharDataT.unshift(assembleLastEcharDataT);
         this.assembleEcharDataH.unshift(assembleLastEcharDataH);
       },
-      moment(){
-        moment.lang('zh-cn');
-        return moment();
+      initNowTime(){
+        //moment.lang('zh-cn');
+        let that = this;
+        setInterval(function(){
+          that.nowTime=moment().format('YYYY-MM-DD HH:mm:ss');
+          // console.log(that.nowTime);
+        },1000);
       }
   },
   mounted(){
       console.log('mounted --- App.vue');
       this.$nextTick(()=>{
         this.getEchartData();
+        this.initNowTime();
       });
   },
   components:{
-    'v-header':Header,
     'line-echart':LineEchart,
     'temperature':Temperature,
     'humidity':Humidity,
@@ -172,17 +164,30 @@ export default {
     margin: 0 auto;
     box-sizing: content-box;
     .time{
-      position: absolute;
-      display:inline-block;
-      left:40%;
-      top:50%;
+      display:flex;
+      flex:1;
+      justify-content:center;
+      align-items:center;
       color:white;
+      //border:1px solid #2a7ae2;
+      font-size:24px;
+      .cursor{
+        animation:1s blink step-end infinite;
+      }
     }
   }
   .echart-item{
     flex:1;
     position: relative;
     height:200px;
+  }
+  @keyframes "blink" { 
+    from, to { 
+      color: transparent;
+    }
+    50% { 
+      color: white; 
+    } 
   }
 
 </style>
