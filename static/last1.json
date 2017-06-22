@@ -1,0 +1,10 @@
+{
+    "status": 0,
+    "data": {
+        "id": 12,
+        "temperature": "24",
+        "humidity": "24",
+        "createTime": "2017-06-14 22:30:09",
+        "updateTime": "2017-06-14 22:38:09"
+    }
+}

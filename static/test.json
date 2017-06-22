@@ -1,0 +1,104 @@
+{
+    "status": 0,
+    "data": {
+        "pageNum": 1,
+        "pageSize": 20,
+        "size": 11,
+        "orderBy": "id desc",
+        "startRow": 1,
+        "endRow": 11,
+        "total": 11,
+        "pages": 1,
+        "list": [
+            {
+                "id": 11,
+                "temperature": "14",
+                "humidity": "14",
+                "createTime": "2017-06-14 21:30:09",
+                "updateTime": "2017-06-14 21:38:09"
+            },
+            {
+                "id": 10,
+                "temperature": "13",
+                "humidity": "33",
+                "createTime": "2017-06-13 19:54:11",
+                "updateTime": "2017-06-13 19:54:11"
+            },
+            {
+                "id": 9,
+                "temperature": "30",
+                "humidity": "20",
+                "createTime": "2017-06-13 18:31:02",
+                "updateTime": "2017-06-13 18:31:02"
+            },
+            {
+                "id": 8,
+                "temperature": "1",
+                "humidity": "20",
+                "createTime": "2017-06-13 17:30:55",
+                "updateTime": "2017-06-13 17:30:55"
+            },
+            {
+                "id": 7,
+                "temperature": "22",
+                "humidity": "3",
+                "createTime": "2017-06-13 16:38:14",
+                "updateTime": "2017-06-13 16:38:14"
+            },
+            {
+                "id": 6,
+                "temperature": "22",
+                "humidity": "34",
+                "createTime": "2017-06-13 16:57:11",
+                "updateTime": "2017-06-13 16:57:11"
+            },
+            {
+                "id": 5,
+                "temperature": "33",
+                "humidity": "33",
+                "createTime": "2017-06-13 16:15:11",
+                "updateTime": "2017-06-13 16:15:11"
+            },
+            {
+                "id": 4,
+                "temperature": "22",
+                "humidity": "33",
+                "createTime": "2017-06-12 22:46:16",
+                "updateTime": "2017-06-12 22:46:16"
+            },
+            {
+                "id": 3,
+                "temperature": "11",
+                "humidity": "22",
+                "createTime": "2017-06-12 22:02:03",
+                "updateTime": "2017-06-12 22:02:03"
+            },
+            {
+                "id": 2,
+                "temperature": "25",
+                "humidity": "10",
+                "createTime": "2017-06-12 21:06:30",
+                "updateTime": "2017-06-12 21:06:30"
+            },
+            {
+                "id": 1,
+                "temperature": "30",
+                "humidity": "15",
+                "createTime": "2017-06-12 21:06:27",
+                "updateTime": "2017-06-12 21:06:27"
+            }
+        ],
+        "firstPage": 1,
+        "prePage": 0,
+        "nextPage": 0,
+        "lastPage": 1,
+        "isFirstPage": true,
+        "isLastPage": true,
+        "hasPreviousPage": false,
+        "hasNextPage": false,
+        "navigatePages": 8,
+        "navigatepageNums": [
+            1
+        ]
+    }
+}
