@@ -159,10 +159,10 @@ export default {
   .current-info{
     display:flex;
     position:relative;
+    box-sizing: content-box;
     width: 90%;
     height: 15%;
     margin: 0 auto;
-    box-sizing: content-box;
     .time{
       display:flex;
       flex:1;

@@ -1,11 +1,11 @@
 
 const baseUrl="http://api.op8278.site";
-// http://119.23.74.71:8080/zigbee-greenhouse/api/zigbee/3
+// const baseUrl="http://localhost:8081/api";
+
 module.exports = {
 
   basePath:baseUrl+"/",
 
- // getAllZigbeeData:baseUrl+"/zigbee/all",
   getAllZigbeeData:baseUrl+"/zigbee/all",
 
   getLastZigbeeData:baseUrl+"/zigbee/last",
