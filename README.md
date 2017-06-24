@@ -12,7 +12,7 @@ const baseUrl="你的上线服务器ip";
 
 
 运行方法  
-git clone https://github.com/op8278/zigbee-greenhouse-vue.git
+git clone https://github.com/op8278/zigbee-greenhouse-vue.git  
 cd zigbee-greenhourse-vue  
 npm install  
 npm run dev  
