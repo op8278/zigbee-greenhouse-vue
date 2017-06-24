@@ -1,6 +1,5 @@
-
-const baseUrl="http://api.op8278.site";
-// const baseUrl="http://localhost:8081/api";
+//const baseUrl="你的上线服务器ip";  
+const baseUrl="http://localhost:8081/api";
 
 module.exports = {
 
@@ -21,4 +20,8 @@ module.exports = {
   searchZigbeeDataByDate:baseUrl+"/zigbee/search/date",
 
   addZigbeeData:baseUrl+"/zigbee/",
+
+  getAllZigbeeDataTestData:"../static/test.json",
+
+  getLastZigbeeDataTestData:"../static/last1.json",
 }

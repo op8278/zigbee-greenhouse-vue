@@ -60,7 +60,9 @@ export default {
     getEchartData(url){
         this.$refs.lineEchart.showLoading();
         //获取最新10条Zigbee数据
-        this.$http.get(ApiAdress.getAllZigbeeData).then((res)=>{
+        // Test : 访问静态模拟数据 若要访问外网 url为 ApiAdress.getAllZigbeeData
+        // this.$http.get(ApiAdress.getAllZigbeeData).then((res)=>{
+        this.$http.get(ApiAdress.getAllZigbeeDataTestData).then((res)=>{
           let resData = res.data; 
            console.log(resData);
           if (resData.status!==0) {
@@ -80,8 +82,9 @@ export default {
         });
       },
       getLastEchartData(url){
-        // console.log(ApiAdress.getLastZigbeeData);
-        this.$http.get(ApiAdress.getLastZigbeeData).then((res)=>{
+        // Test : 访问静态模拟数据 若要访问外网 url为 ApiAdress.getLastZigbeeData
+        // this.$http.get(ApiAdress.getLastZigbeeData).then((res)=>{
+        this.$http.get(ApiAdress.getLastZigbeeDataTestData).then((res)=>{
           let resData = res.data;
           console.log(resData);
           if (resData.status!==0) {
