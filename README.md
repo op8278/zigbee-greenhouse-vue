@@ -1,5 +1,5 @@
 # zigbee-greenhouse-vue
-zigbee-greenhouse 前端部分  
+zigbee-greenhouse 前端部分 Vue实现  
 展示页面 http://zigbee.op8278.site/  
 
 修改Api请求地址  
@@ -10,7 +10,7 @@ const baseUrl="http://api.op8278.site";
 
 
 运行方法  
-git clone git@github.com:op8278/zigbee-greenhouse-vue.git  
+git clone https://github.com/op8278/zigbee-greenhouse-vue.git
 cd zigbee-greenhourse-vue  
 npm install  
 npm run dev  
