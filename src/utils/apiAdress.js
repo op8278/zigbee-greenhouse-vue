@@ -1,9 +1,11 @@
 //const baseUrl="你的上线服务器ip";  
 const baseUrl="http://localhost:8081/api";
-
+const wsUrl="ws://localhost:8081/websocket/zigbee";
 module.exports = {
 
   basePath:baseUrl+"/",
+
+  wsUrl,
 
   getAllZigbeeData:baseUrl+"/zigbee/all",
 

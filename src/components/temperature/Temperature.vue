@@ -18,23 +18,20 @@
     },
     data(){
       return{
-        echart:null,
+        echart:null
         //  ['2017-06-13 19:54:11', 19]
       }
     },
     methods:{
       initEchart(config){
-        console.log('initEcharts --- Temperature');
         let option = config || temperatureOption;
         this.echart = echarts.init(this.$refs.main);
         this.echart.setOption(option);
       },
       refreshData(data){
         if (!this.echart) {
-          console.log('请初始化Echarts---Temperature');
           return ;
         }
-        // console.log(data);
         let option = {
           series:[{
             data:data
@@ -44,14 +41,10 @@
       }
     },
     created(){
-      console.log('created  --- Temperature');
       this.$nextTick(()=>{
           this.initEchart();
-          // this.getEchartData();
       });
-      //AJAX请求数据
-    },
-
+    }
   }
 </script>
 

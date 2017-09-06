@@ -13,7 +13,6 @@
       </div>
     </div>
     <line-echart class="lineEchart" ref="lineEchart" ></line-echart>
-    
   </div>
 </template>
 
@@ -30,7 +29,9 @@ export default {
       assembleLastEcharData:Object,
       assembleEcharDataT:Object,
       assembleEcharDataH:Object,
-      nowTime:moment().format('YYYY-MM-DD HH:mm:ss')
+      nowTime:moment().format('YYYY-MM-DD HH:mm:ss'),
+      isSupportWebSocket:true,
+      webSocket:null
     }
   },
   methods:{
@@ -61,81 +62,126 @@ export default {
         this.$refs.lineEchart.showLoading();
         //获取最新10条Zigbee数据
         // Test : 访问静态模拟数据 若要访问外网 url为 ApiAdress.getAllZigbeeData
-        // this.$http.get(ApiAdress.getAllZigbeeData).then((res)=>{
-        this.$http.get(ApiAdress.getAllZigbeeDataTestData).then((res)=>{
+        // this.$http.get(ApiAdress.getAllZigbeeDataTestData).then((res)=>{
+        this.$http.get(ApiAdress.getAllZigbeeData).then((res)=>{
           let resData = res.data; 
            console.log(resData);
           if (resData.status!==0) {
             console.log('请求失败');
             return ;
           }
-          //装配
-          //TODO 判断是否List为空
+          // 装配
+          // TODO 判断是否List为空
           this.assembleDataList(resData.data.list);
           this.$nextTick(()=>{
             this.refreshAllEchartsData();
-            //轮训访问最新数据
-            setInterval(()=>{
-              this.getLastEchartData();
-            },10000);
+            // 如果不支持websock,轮训访问最新数据(10s)
+            if (!this.isSupportWebSocket) {
+              console.log('轮训开始!!!');
+              setInterval(()=>{
+                this.getLastEchartDataByAjax();
+              },10000);
+            }
           });
         });
       },
-      getLastEchartData(url){
-        // Test : 访问静态模拟数据 若要访问外网 url为 ApiAdress.getLastZigbeeData
-        // this.$http.get(ApiAdress.getLastZigbeeData).then((res)=>{
-        this.$http.get(ApiAdress.getLastZigbeeDataTestData).then((res)=>{
-          let resData = res.data;
-          console.log(resData);
-          if (resData.status!==0) {
-            console.log('获取最新数据失败');
-            return ;
-          }
-          if (this.lastEchartDataId == resData.data.id) {
-            console.log('重复数据,不刷新')
-            return ;
-          }
-          this.assembleLastData(resData.data);
-          this.$nextTick(()=>{
-            this.refreshAllEchartsData();
-          });
-        });
-      },
-      assembleDataList(dataList){
-        let assembleEcharDataT = [];
-        let assembleEcharDataH = [];
-        for(let i=0,length=dataList.length;i<length;i++){
-          let item = dataList[i];
-          let itemDataT = [item.createTime,item.temperature];
-          let itemDataH = [item.createTime,item.humidity];
-          assembleEcharDataT.push(itemDataT);
-          assembleEcharDataH.push(itemDataH);
-        }
-        this.assembleEcharDataT = assembleEcharDataT;
-        this.assembleEcharDataH = assembleEcharDataH;
-        this.lastEchartDataId = dataList[0].id;
-        this.assembleLastEcharData = dataList[0];
-      },
-      assembleLastData(data){
-        let assembleLastEcharDataT = [data.createTime,data.temperature];
-        let assembleLastEcharDataH = [data.createTime,data.humidity];
-        this.assembleLastEcharData = data
-        this.lastEchartDataId = data.id;
-        this.assembleEcharDataT.unshift(assembleLastEcharDataT);
-        this.assembleEcharDataH.unshift(assembleLastEcharDataH);
-      },
-      initNowTime(){
-        //moment.lang('zh-cn');
-        let that = this;
-        setInterval(function(){
-          that.nowTime=moment().format('YYYY-MM-DD HH:mm:ss');
-          // console.log(that.nowTime);
-        },1000);
+    getLastEchartDataByAjax(url){
+      // Test : 访问静态模拟数据 若要访问外网 url为 ApiAdress.getLastZigbeeData
+      this.$http.get(ApiAdress.getLastZigbeeData).then((res)=>{
+        this.handleLastEchartData(res.data);
+      });
+    },
+    assembleDataList(dataList){
+      let assembleEcharDataT = [];
+      let assembleEcharDataH = [];
+      for(let i=0,length=dataList.length;i<length;i++){
+        let item = dataList[i];
+        let itemDataT = [item.createTime,item.temperature];
+        let itemDataH = [item.createTime,item.humidity];
+        assembleEcharDataT.push(itemDataT);
+        assembleEcharDataH.push(itemDataH);
       }
+      this.assembleEcharDataT = assembleEcharDataT;
+      this.assembleEcharDataH = assembleEcharDataH;
+      this.lastEchartDataId = dataList[0].id;
+      this.assembleLastEcharData = dataList[0];
+    },
+    assembleLastData(data){
+      let assembleLastEcharDataT = [data.createTime,data.temperature];
+      let assembleLastEcharDataH = [data.createTime,data.humidity];
+      this.assembleLastEcharData = data
+      this.lastEchartDataId = data.id;
+      this.assembleEcharDataT.unshift(assembleLastEcharDataT);
+      this.assembleEcharDataH.unshift(assembleLastEcharDataH);
+    },
+    handleLastEchartData(resData){
+      if (resData.status!==0) {
+        console.log('获取最新数据失败');
+        return ;
+      }
+      if (this.lastEchartDataId == resData.data.id) {
+        console.log('重复数据,不刷新')
+        return ;
+      }
+      this.assembleLastData(resData.data);
+      this.$nextTick(()=>{
+        this.refreshAllEchartsData();
+      });
+    },
+    initNowTime(){
+      let that = this;
+      setInterval(function(){
+        that.nowTime=moment().format('YYYY-MM-DD HH:mm:ss');
+      },1000);
+    },
+    initWebSocket(){
+      let webSocket;
+      // 判断当前浏览器是否支持WebSocket
+      if ('WebSocket' in window) {
+          this.webSocket = new WebSocket(ApiAdress.wsUrl);
+      }
+      else {
+          console.log('当前浏览器 Not support websocket');
+          this.isSupportWebSocket = false;
+          return ;
+      }
+      // 连接发生错误的回调方法
+      this.webSocket.onerror = () => {
+          console.log("webSocket连接发生错误");
+      }
+      // 连接成功建立的回调方法
+      this.webSocket.onopen = () => {
+          console.log("webSocket连接成功");
+      }
+      // 接收到消息的回调方法
+      this.webSocket.onmessage = (event) => {
+          // 刷新数据
+          this.handleLastEchartData(JSON.parse(event.data));
+      }
+      // 连接关闭的回调方法
+      this.webSocket.onclose = () => {
+          console.log("webSocket连接关闭");
+      }
+      // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常
+      window.onbeforeunload = () => {
+          this.closeWebSocket();
+      }
+    },
+    closeWebSocket() {
+      if (!this.webSocket) {
+        return ;
+      }
+      this.webSocket.close();
+    },
+    getLastEchartDataByWebSocket(){
+      if (!isSupportWebSocket) {
+        return ;
+      }
+    }
   },
   mounted(){
-      console.log('mounted --- App.vue');
       this.$nextTick(()=>{
+        this.initWebSocket();
         this.getEchartData();
         this.initNowTime();
       });
@@ -172,7 +218,6 @@ export default {
       justify-content:center;
       align-items:center;
       color:white;
-      //border:1px solid #2a7ae2;
       font-size:24px;
       .cursor{
         animation:1s blink step-end infinite;
