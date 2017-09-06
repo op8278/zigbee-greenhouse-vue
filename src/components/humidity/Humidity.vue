@@ -6,8 +6,9 @@
 
 <script type="text/javascript">
   import echarts from 'echarts/lib/echarts';
-  import 'echarts/lib/component/tooltip';
+  // import echarts from 'echarts';
   import 'echarts-liquidfill';
+  import 'echarts/lib/component/tooltip';
   import { humidityOption } from '@/utils/echartConfig.js';
   export default {
     props:{
@@ -24,6 +25,7 @@
         let option = config || humidityOption;
         this.echart = echarts.init(this.$refs.main);
         this.echart.setOption(option);
+        window.onresize = this.echart.resize;
       },
       refreshData(data){
         if (!this.echart) {
@@ -39,7 +41,7 @@
     },
     created(){
       this.$nextTick(()=>{
-          this.initEchart();
+        this.initEchart();
       });
     }
   }
@@ -47,7 +49,8 @@
 
 <style lang="scss" scoped>
   .humidity{
-    height:200px;
+    width: 100%;
+    height:100%;
     .main{
       width:100%;
       height:100%;

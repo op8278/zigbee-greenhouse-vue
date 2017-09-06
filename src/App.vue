@@ -12,7 +12,9 @@
         <temperature ref="temperature"></temperature>
       </div>
     </div>
-    <line-echart class="lineEchart" ref="lineEchart" ></line-echart>
+    <div class="line-echart-wrapper">
+      <line-echart ref="lineEchart" ></line-echart>
+    </div>
   </div>
 </template>
 
@@ -198,36 +200,42 @@ export default {
   .app-container{
     position: relative;
     width:100%;
-    height:1024px;
+    height:100%;
     margin:0px;
     padding:0px;
     padding-top:5%;
     background:url('./assets/bg.jpg');
     background-size:100% 100%;
-  }
-  .current-info{
-    display:flex;
-    position:relative;
-    box-sizing: content-box;
-    width: 90%;
-    height: 15%;
-    margin: 0 auto;
-    .time{
+    .current-info{
       display:flex;
-      flex:1;
-      justify-content:center;
-      align-items:center;
-      color:white;
-      font-size:24px;
-      .cursor{
-        animation:1s blink step-end infinite;
+      position:relative;
+      box-sizing: content-box;
+      width: 90%;
+      height: 15%;
+      margin: 0 auto;
+      .echart-item{
+        flex:1;
+        position: relative;
+        height:200px;
+      }
+      .time{
+        display:flex;
+        flex:2;
+        justify-content:center;
+        align-items:center;
+        text-align: center;
+        color:white;
+        font-size:18px;
+        .cursor{
+          animation:1s blink step-end infinite;
+        }
       }
     }
-  }
-  .echart-item{
-    flex:1;
-    position: relative;
-    height:200px;
+    .line-echart-wrapper{
+      width: 93%;
+      height: 500px;
+      margin: 0 auto;
+    }
   }
   @keyframes "blink" { 
     from, to { 

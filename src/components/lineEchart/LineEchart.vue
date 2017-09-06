@@ -1,5 +1,5 @@
 <template>
-  <div style="line-echart">
+  <div class="line-echart">
     <div class="main" ref="main" id="main"></div>
   </div>
 </template>
@@ -9,10 +9,8 @@
   import 'echarts/lib/chart/line';
   import 'echarts/lib/component/dataZoom';
   import 'echarts/lib/component/tooltip';
-  import 'echarts/lib/component/toolbox';
   import 'echarts/lib/component/legend';
   import { lineEchartOption } from '@/utils/echartConfig.js';
-  import ApiAdress from '@/utils/apiAdress.js';
   export default {
     props:{
       temperature:{
@@ -36,6 +34,7 @@
         let tdata = this.assembleEcharDataT;
         let hdata = this.assembleEcharDataH;
         this.echart.setOption(option);
+        window.onresize = this.echart.resize;
       },
       refreshEchartsData(config){
         if (!this.echart) {
@@ -60,15 +59,19 @@
     },
     created(){
       this.$nextTick(()=>{
-          this.initEchart();
+        this.initEchart();
       });
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  .line-echart{
+    width:100%;
+    height:500px;
     .main{
       width:100%;
       height:500px;
     }
+  }
 </style>
