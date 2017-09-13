@@ -2,7 +2,7 @@
 ### zigbee-greenhouse 前端部分 Vue实现  
 展示页面 http://zigbee.op8278.site/  
 
-### 服务器部分(java Spring+SpringMVC+Mybatis实现)  
+### 服务器部分(java实现)  
 https://github.com/op8278/zigbee-greenhouse
 
 修改Api请求地址  
